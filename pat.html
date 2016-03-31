@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Patatock</title>
+	<link rel="stylesheet" type="text/css" href="Assets\css\pat.css">
+	<script type="text/javascript" src="Assets\js\paper-full.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/1.1.29/howler.min.js"></script>
+</head>
+<body>
+	<script type="text/paperscript" canvas="myCanvas">
+		// Create a Paper.js Path to draw a line into it:
+		/*var path = new Path();
+		// Give the stroke a color
+		path.strokeColor = 'green';
+		var start = new Point(100, 100);
+		// Move to start and draw a line from there
+		path.moveTo(start);
+		// Note the plus operator on Point objects.
+		// PaperScript does that for us, and much more!
+		path.lineTo(start + [ 100, -50 ]);*/
+
+		var keyData = {
+			a: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/bubbles.mp3"]
+				})
+			},
+			b: {
+				color: "red",
+				sound: new Howl({
+					urls: ["Assets/sounds/clay.mp3"]
+				})
+			},
+			c: {
+				color: "orange",
+				sound: new Howl({
+					urls: ["Assets/sounds/confetti.mp3"]
+				})
+			},
+			d: {
+				color: "yellow",
+				sound: new Howl({
+					urls: ["Assets/sounds/corona.mp3"]
+				})
+			},
+			e: {
+				color: "green",
+				sound: new Howl({
+					urls: ["Assets/sounds/dotted-spiral.mp3"]
+				})
+			},
+			f: {
+				color: "blue",
+				sound: new Howl({
+					urls: ["Assets/sounds/flash-1.mp3"]
+				})
+			},
+			g: {
+				color: "#c49327",
+				sound: new Howl({
+					urls: ["Assets/sounds/flash-2.mp3"]
+				})
+			},
+			h: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/flash-3.mp3"]
+				})
+			},
+			i: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/glimmer.mp3"]
+				})
+			},
+			j: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/moon.mp3"]
+				})
+			},
+			k: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/pinwheel.mp3"]
+				})
+			},
+			l: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/piston-1.mp3"]
+				})
+			},
+			m: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/piston-2.mp3"]
+				})
+			},
+			n: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/piston-3.mp3"]
+				})
+			},
+			o: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/prism-1.mp3"]
+				})
+			},
+			p: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/prism-2.mp3"]
+				})
+			},
+			q: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/prism-3.mp3"]
+				})
+			},
+			r: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/splits.mp3"]
+				})
+			},
+			s: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/squiggle.mp3"]
+				})
+			},
+			t: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/strike.mp3"]
+				})
+			},
+			u: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/suspension.mp3"]
+				})
+			},
+			v: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/timber.mp3"]
+				})
+			},
+			w: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/ufo.mp3"]
+				})
+			},
+			x: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/veil.mp3"]
+				})
+			},
+			y: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/wipe.mp3"]
+				})
+			},
+			z: {
+				color: "purple",
+				sound: new Howl({
+					urls: ["Assets/sounds/zig-zag.mp3"]
+				})
+			},
+		}
+
+		var sound = new Howl({
+			urls: ["Assets/sounds/piston-1.mp3"]
+		});
+		var circles = [];
+		var squares = [];
+		function onKeyDown(event){
+			//sound.play();
+			/*var Max = 255;
+			r = Math.random()*Max
+			g = Math.random()*Max
+			b = Math.random()*Max*/
+			var maxPoint = new Point(view.size.width, view.size.height);
+			var randomPoint = Point.random();
+			var point = maxPoint*randomPoint;
+			/*var newCircle = new Path.Circle(point, 500);
+			newCircle.fillColor = "rgb("+r+","+g+","+b+")";
+			circles.push(newCircle);*/
+
+			var newHexagon = new Path.RegularPolygon(point, 6, 500);
+			//newHexagon.fillColor = "rgb("+r+","+g+","+b+")";
+			newHexagon.fillColor = keyData[event.key].color;
+			keyData[event.key].sound.play();
+			newHexagon.selected = false;
+			circles.push(newHexagon);
+		}
+
+		/*var animatedCircle = new Path.Circle(new Point(300,300), 200);
+		animatedCircle.fillColor = "red";*/
+
+		function onFrame(event){
+			for(var i=0;i<circles.length;i++){
+				console.log(circles[i]);
+				circles[i].fillColor.hue+=2;
+				circles[i].scale(.9);
+				circles[i].rotate(20);
+			}
+		}
+		/*for(var x=0;x<=10;x++){
+			for(var y=0;y<=10;y++){
+				new Path.Circle(new Point(y*100, x*100), 10).fillColor = "rgb("+x*10+","+y*10+","+(x+y)*5+")";
+			}
+		}*/
+	</script>
+
+
+	<canvas id="myCanvas" resize></canvas>
+</body>
+</html>
